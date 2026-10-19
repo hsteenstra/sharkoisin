@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✏️ STUDENT: Change the words between <title> and </title>. This shows up on the browser tab! -->
+  <title>My Shark Website</title>
+
+  <!-- ===================================================================
+       🦈 HEY OISIN! You don't need to touch anything in <style>. This is the
+       "pretty stuff" (CSS). Scroll down to <body> to find YOUR jobs!
+       =================================================================== -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Trebuchet MS", "Comic Sans MS", sans-serif;
+      color: #eafcff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #1ec8e8 0%, #0a7fb8 30%, #064a7a 65%, #021d3a 100%);
+      background-attachment: fixed;
+    }
+
+    /* light rays from the surface */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(100deg, rgba(255,255,255,0.07) 0 40px, transparent 40px 140px);
+      pointer-events: none;
+      animation: rays 8s ease-in-out infinite alternate;
+    }
+    @keyframes rays { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
+
+    /* ---------- the shark ---------- */
+    .shark {
+      position: fixed;
+      top: 22%;
+      width: 260px;
+      z-index: 1;
+      animation: swim 18s linear infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.35));
+    }
+    .shark svg { animation: bob 2s ease-in-out infinite; }
+    .shark .tail { transform-origin: 40px 70px; animation: wag 0.5s ease-in-out infinite alternate; }
+    @keyframes swim {
+      0%   { left: -300px; transform: scaleX(1); }
+      49%  { left: 110vw;  transform: scaleX(1); }
+      50%  { left: 110vw;  transform: scaleX(-1); }
+      99%  { left: -300px; transform: scaleX(-1); }
+      100% { left: -300px; transform: scaleX(1); }
+    }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(14px); } }
+    @keyframes wag { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+    /* ---------- bubbles ---------- */
+    .bubble {
+      position: fixed; bottom: -40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.12);
+      animation: rise linear infinite;
+      pointer-events: none;
+    }
+    @keyframes rise { to { transform: translateY(-115vh) translateX(20px); opacity: 0; } }
+
+    /* ---------- seaweed ---------- */
+    .seaweed {
+      position: fixed; bottom: -10px;
+      width: 18px; border-radius: 50% 50% 0 0;
+      background: linear-gradient(#3ddc84, #0b6b3a);
+      transform-origin: bottom center;
+      animation: sway 3s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes sway { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
+
+    /* ---------- page content ---------- */
+    main {
+      position: relative; z-index: 2;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 16px 160px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 4px 0 #034063, 0 8px 20px rgba(0,0,0,0.4);
+      margin-bottom: 8px;
+    }
+    .subtitle { text-align: center; font-size: 1.3rem; margin-bottom: 220px; opacity: 0.9; }
+
+    section {
+      background: rgba(2, 40, 75, 0.6);
+      border: 2px solid rgba(120, 230, 255, 0.4);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    h2 { font-size: 1.8rem; color: #7ff3ff; margin-bottom: 12px; }
+    p  { font-size: 1.15rem; line-height: 1.6; margin-bottom: 10px; }
+    ul { padding-left: 24px; font-size: 1.15rem; line-height: 1.8; }
+    li::marker { content: "🦈 "; }
+    img { max-width: 100%; border-radius: 16px; margin-top: 10px; border: 3px solid #7ff3ff; }
+    a {
+      display: inline-block; margin: 6px 8px 0 0;
+      padding: 10px 18px; border-radius: 999px;
+      background: #ffcc33; color: #03263f;
+      font-weight: bold; text-decoration: none;
+      transition: transform 0.15s;
+    }
+    a:hover { transform: scale(1.08) rotate(-2deg); }
+    footer { text-align: center; opacity: 0.8; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- 🦈 THE SHARK (pre-built, no touching!) -->
+  <div class="shark">
+    <svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+      <g class="tail"><path d="M45 70 L0 25 L18 70 L0 115 Z" fill="#5d7f99"/></g>
+      <path d="M40 70 C80 30, 200 25, 270 62 C285 70, 285 76, 270 82 C200 112, 80 108, 40 70 Z" fill="#6f93ad"/>
+      <path d="M60 80 C120 105, 210 102, 268 80 C200 96, 120 96, 60 80 Z" fill="#e8f1f6"/>
+      <path d="M140 40 L165 0 L185 38 Z" fill="#5d7f99"/>
+      <path d="M150 88 L130 120 L178 92 Z" fill="#5d7f99"/>
+      <circle cx="238" cy="60" r="6" fill="#0b1d2b"/>
+      <circle cx="240" cy="58" r="2" fill="#fff"/>
+      <path d="M215 55 Q212 70 215 82 M205 56 Q202 70 205 82 M195 57 Q192 70 195 82" stroke="#4a6a82" stroke-width="2" fill="none"/>
+      <path d="M244 84 L250 78 L256 84 L262 78 L268 83" stroke="#fff" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         ✏️ JOB 1: Put YOUR website name inside the <h1> tags.
+         <h1> = the BIGGEST heading on the page.
+         ============================================================ -->
+    <h1>Welcome to Shark Zone!</h1>
+
+    <!-- ✏️ JOB 2: Write a short sentence about your site inside <p> -->
+    <p class="subtitle">The coolest place on the internet for sharks 🌊</p>
+
+
+    <!-- ============================================================
+         ✏️ JOB 3: ABOUT ME
+         <h2> is a smaller heading. <p> is a paragraph.
+         Change the words, then try adding ANOTHER <p> under it!
+         ============================================================ -->
+    <section>
+      <h2>About Me</h2>
+      <p>Hi! My name is ______ and I am ___ years old.</p>
+      <!-- 👇 Add another <p>...</p> right here -->
+
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 4: FAVORITE SHARKS LIST
+         <ul> starts a list. Every <li> is one item.
+         Add at least 3 more <li> items!
+         ============================================================ -->
+    <section>
+      <h2>My Favorite Sharks</h2>
+      <ul>
+        <li>Great White Shark</li>
+        <!-- 👇 Add more like this:  <li>Hammerhead</li> -->
+
+      </ul>
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 5: IF I WERE A SHARK...
+         Oisin, finish each sentence inside the <p> tags!
+         ============================================================ -->
+    <section>
+      <h2>If I Were a Shark...</h2>
+      <p>My shark name would be ______.</p>
+      <p>I would live in the ______ Ocean.</p>
+      <p>My favorite food to eat would be ______.</p>
+      <p>My best friend would be a ______.</p>
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 6: SHARK SCORES
+         Give each shark a score out of 10!
+         Change the shark names and scores. Add more <li> lines!
+         ============================================================ -->
+    <section>
+      <h2>Shark Scores</h2>
+      <ul>
+        <li>Hammerhead: 8/10</li>
+        <li>Whale Shark: __/10</li>
+        <!-- 👇 Add more sharks with scores -->
+
+      </ul>
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 7: MY SHARK STORY
+         Write a short story about a shark! Each <p> is a new part.
+         Beginning → Middle → End
+         ============================================================ -->
+    <section>
+      <h2>My Shark Story</h2>
+      <p>Once upon a time, there was a shark named ______...</p>
+      <!-- 👇 What happened next? Add more <p> parts -->
+
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 8: SHARK QUIZ
+         Write questions for your friends! Put the answer in <b>bold</b>.
+         ============================================================ -->
+    <section>
+      <h2>Shark Quiz</h2>
+      <p>Q: What is the biggest shark? A: <b>The Whale Shark</b></p>
+      <!-- 👇 Add your own questions -->
+
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 9: COOL FACTS
+         Write your own <h2> heading and a few <p> facts!
+         BONUS: wrap a word in <b>...</b> to make it bold,
+         or <i>...</i> to make it italic.
+         ============================================================ -->
+    <section>
+      <h2>Shark Facts</h2>
+      <p>Sharks have been around for <b>over 400 million years</b>!</p>
+      <!-- 👇 Add your own facts here -->
+
+    </section>
+
+
+    <!-- ============================================================
+         ✏️ JOB 10: LINKS
+         <a> makes a link. href = where it goes.
+         The words between <a> and </a> are what you click on.
+         Add another link button!
+         ============================================================ -->
+    <section>
+      <h2>Learn More</h2>
+      <a href="https://kids.nationalgeographic.com/animals/fish/facts/great-white-shark" target="_blank">Nat Geo Kids</a>
+      <!-- 👇 Add another:  <a href="https://..." target="_blank">My Link</a> -->
+
+    </section>
+
+
+    <!-- ============================================================
+         🏆 BOSS LEVEL: Make a whole new <section> all by yourself!
+         Copy one of the sections above and change it.
+         ============================================================ -->
+
+
+
+    <!-- ✏️ JOB 11: Put your name in the footer -->
+    <footer>
+      <p>Made by ______ 🦈</p>
+    </footer>
+
+  </main>
+
+  <!-- 🫧 Bubbles + seaweed get made here automatically. No touching! -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const b = document.createElement("div");
+      const size = 6 + Math.random() * 22;
+      b.className = "bubble";
+      b.style.width = b.style.height = size + "px";
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.animationDuration = 6 + Math.random() * 8 + "s";
+      b.style.animationDelay = Math.random() * 10 + "s";
+      document.body.appendChild(b);
+    }
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement("div");
+      s.className = "seaweed";
+      s.style.left = (i / 14) * 100 + Math.random() * 4 + "vw";
+      s.style.height = 70 + Math.random() * 110 + "px";
+      s.style.animationDelay = Math.random() * 3 + "s";
+      document.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>
